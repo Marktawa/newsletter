@@ -1,15 +1,21 @@
-'use strict';
-
-/**
- * A set of functions called "actions" for `email-news`
- */
+"use strict";
 
 module.exports = {
-  // exampleAction: async (ctx, next) => {
-  //   try {
-  //     ctx.body = 'ok';
-  //   } catch (err) {
-  //     ctx.body = err;
-  //   }
-  // }
+  async send(ctx) {
+    try {
+      const { to, subject, htmlContent } = ctx.request.body;
+
+      if (!to || !subject || !htmlContent) {
+        return ctx.badRequest("Missing required fields: to, subject, htmlContent");
+      }
+
+      // Access service using `strapi.service()`
+      await strapi.service("api::email-news.email-news").sendEmail({ to, subject, htmlContent });
+
+      ctx.send({ message: "Email sent successfully" });
+    } catch (error) {
+      console.error("Email error:", error);
+      ctx.send({ error: "Failed to send email", details: error.message });
+    }
+  },
 };
