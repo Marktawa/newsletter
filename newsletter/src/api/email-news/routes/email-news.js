@@ -1,13 +1,12 @@
 module.exports = {
   routes: [
-    // {
-    //  method: 'GET',
-    //  path: '/email-news',
-    //  handler: 'email-news.exampleAction',
-    //  config: {
-    //    policies: [],
-    //    middlewares: [],
-    //  },
-    // },
+    {
+      method: "POST",
+      path: "/send-email",
+      handler: "email-news.send",
+      config: {
+        auth: false, // Set to true if authentication is required
+      },
+    },
   ],
 };
