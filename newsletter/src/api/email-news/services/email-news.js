@@ -14,7 +14,7 @@ module.exports = {
       const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
       const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
 
-      sendSmtpEmail.sender = { name: "Your Business", email: "your-email@example.com" };
+      sendSmtpEmail.sender = { name: "Your Business", email: "paul.zimba96@gmail.com" };
       sendSmtpEmail.to = [{ email: to }];
       sendSmtpEmail.subject = subject;
       sendSmtpEmail.htmlContent = htmlContent;
