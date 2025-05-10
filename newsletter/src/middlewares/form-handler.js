@@ -1,3 +1,4 @@
+// ./src/middlewares/form-handler.js
 module.exports = (config, { strapi }) => {
     return async (ctx, next) => {
       if (ctx.path === '/api/subscribers' && ctx.method === 'POST') {
@@ -11,6 +12,14 @@ module.exports = (config, { strapi }) => {
           errors.push({ field: 'name', message: 'Name is required' });
         } else if (name.length > 255) {
           errors.push({ field: 'name', message: 'Name must be 255 characters or less'})
+        }
+  
+        // Validate email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email) {
+          errors.push({ field: 'email', message: 'Email is required' });
+        } else if (!emailRegex.test(email)) {
+          errors.push({ field: 'email', message: 'Please provide a valid email address' });
         }
   
         // Display errors
