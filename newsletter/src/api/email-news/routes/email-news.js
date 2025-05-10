@@ -10,9 +10,19 @@ module.exports = {
     },
     {
       method: "POST",
+      path: "/send-email-to-subscriber",
+      handler: "email-news.sendToSubscriber",
+      config: {
+        auth: false,
+      },
+    },
+    {
+      method: "POST",
       path: "/send-email-to-all",
       handler: "email-news.sendToAllSubscribers",
-      config: { auth: false },
+      config: { 
+        auth: false, 
+      },
     }
   ],
 };
