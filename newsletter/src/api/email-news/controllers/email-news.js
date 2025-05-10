@@ -18,6 +18,40 @@ module.exports = {
       ctx.send({ error: "Failed to send email", details: error.message });
     }
   },
+  async sendToSubscriber(ctx) {
+    try {
+      const { id, subject, htmlContent } = ctx.request.body;
+      // id in this case is documentId
+
+      if (!id || !subject || !htmlContent) {
+        return ctx.badRequest("Missing required fields: id, subject, htmlContent");
+      }
+
+      //Fetch subscriber from database - Using Document Service API 
+      const subscriber = await strapi.documents("api::subscriber.subscriber").findOne({
+        documentId: id,
+        fields: ["name", "email"],        
+      });
+
+      if (!subscriber) {
+        return ctx.notFound("Subscriber not found");
+      }
+
+      const { email, name } = subscriber;
+
+      // Send email
+      await strapi.service("api::email-news.email-news").sendEmail({
+        to: email,
+        subject: subject.replace("{name}", name),
+        htmlContent: htmlContent.replace("{name}", name), // Replace {name} with subscriber's name
+      });
+
+      ctx.send({ message: `Email sent successfully to ${email}` });
+    } catch (error) {
+      console.error("Email error:", error);
+      ctx.send({ error: "Failed to send email", details: error.message });
+    }
+  },
   async sendToAllSubscribers(ctx) {
     try {
       const { subject, htmlContent } = ctx.request.body;
