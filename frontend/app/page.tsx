@@ -22,13 +22,20 @@ export default function Page() {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to subscribe");
-      }
+      const data = await response.json();
 
-      setMessage("Subscription successful!");
-      setName("");
-      setEmail("");
+      if (!response.ok) {
+        if (data.errors) {
+          // Display validation error
+          setMessage(data.errors.map(err => `${err.field}: ${err.message}`).join(', '));
+        } else {
+          throw new Error("Failed to subscribe");
+        }
+      } else {
+        setMessage("Subscription successful!");
+        setName("");
+        setEmail("");
+      }
     } catch (error) {
       setMessage("Subscription failed. Try again.");
     }
