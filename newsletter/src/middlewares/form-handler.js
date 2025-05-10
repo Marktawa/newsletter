@@ -1,4 +1,3 @@
-// ./src/middlewares/form-handler.js
 module.exports = (config, { strapi }) => {
     return async (ctx, next) => {
       if (ctx.path === '/api/subscribers' && ctx.method === 'POST') {
@@ -20,6 +19,21 @@ module.exports = (config, { strapi }) => {
           errors.push({ field: 'email', message: 'Email is required' });
         } else if (!emailRegex.test(email)) {
           errors.push({ field: 'email', message: 'Please provide a valid email address' });
+        }
+  
+        // Check for existing email to prevent duplicates
+        if (email && emailRegex.test(email)) {
+          try {
+            const existingSubscriber = await strapi.documents("api::subscriber.subscriber").findMany({
+              filters: { email: email },
+            });
+  
+            if (existingSubscriber && existingSubscriber.length > 0) {
+              errors.push({ field: 'email', message: 'This email is already subscribed' });
+            }
+          } catch (error) {
+            strapi.log.error('Error checking for existing email:', error);
+          }
         }
   
         // Display errors
