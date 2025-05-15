@@ -4,7 +4,7 @@ export async function POST(req: NextRequest) {
     const { name, email } = await req.json();
 
     try {
-        const response = await fetch(`$process.env.STRAPI_URL}/api/subscribers`, {
+        const response = await fetch(`${process.env.STRAPI_URL}/api/subscribers`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

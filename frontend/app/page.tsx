@@ -8,8 +8,6 @@ export default function Page() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  const token = process.env.STRAPI_API_TOKEN;
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
