@@ -8,21 +8,22 @@ export default function Page() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
+  const token = process.env.STRAPI_API_TOKEN;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:1337/api/subscribers", {
+      const response = await fetch("/api/subscribe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          data: { name, email },
-        }),
+        body: JSON.stringify({ name, email }),
       });
 
       const data = await response.json();
+      console.log(data);
 
       if (!response.ok) {
         if (data.errors) {
