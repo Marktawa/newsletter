@@ -71,11 +71,11 @@ export default function Page() {
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
-              <button
-                type="submit"
-                className="w-full md:w-auto px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition duration-300"
-              >Subscribe Now</button>
             </div>
+            <button
+              type="submit"
+              className="w-full md:w-auto px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition duration-300"
+            >Subscribe Now</button>
           </form>
 
           {message && (
@@ -83,6 +83,6 @@ export default function Page() {
           )}
         </div>
       </div>
-    </section>
+    </section >
   );
 }
